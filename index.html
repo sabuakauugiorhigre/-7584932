@@ -1,1 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Counter</title>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<h2>カウンタ表示</h2>
+
+<p>缶：<span id="canCount">0</span></p>
+<p>ペット：<span id="petCount">0</span></p>
+<button onclick="lockCan()">缶ロック</button>
+<button onclick="unlockCan()">缶解除</button>
+<button onclick="lockPet()">ペットロック</button>
+<button onclick="unlockPet()">ペット解除</button>
+<script>
+  // Firebase 設定（あなたのに置き換え）
+  const firebaseConfig = {
+    apiKey: "AIzaSyCVzYfwxUzd5HE2jeQeQvmGaSprseN4FaA",
+    databaseURL: "https://test-cb189-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "test-cb189",
+    appId: "1:307540903180:web:85bc1592381d47bf61f529"
+    };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+    db.ref("counter/can").on("value", snap => {
+    document.getElementById("canCount").innerText = snap.val() ?? 0;
+    });
+
+    db.ref("counter/pet").on("value", snap => {
+    document.getElementById("petCount").innerText = snap.val() ?? 0;
+    });
+    function lockCan() {
+    db.ref("lock/can").set(true);
+    }
+    function unlockCan() {
+    db.ref("lock/can").set(false);
+    }
+    function lockPet() {
+    db.ref("lock/pet").set(true);
+    }
+    function unlockPet() {
+    db.ref("lock/pet").set(false);
+    }
+</script>
+
+</body>
+</html>
 
